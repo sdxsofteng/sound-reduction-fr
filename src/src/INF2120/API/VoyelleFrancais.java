@@ -16,6 +16,46 @@ import java.util.regex.Pattern;
  * @see <a href="https://fr.wiktionary.org/wiki/Annexe:Prononciation/fran%C3%A7ais">référence</a>
  */
 public class VoyelleFrancais {
+
+    public boolean egaliteVoyelle( VoyelleFrancais voyelleAVerifier ) {
+
+        boolean semiVoyelleEgale;
+        boolean voyelleEgale;
+        boolean voyelleCompleteEgale;
+
+        if ( !( ( this.semiVoyelle == null ^ voyelleAVerifier.semiVoyelle == null )
+                || ( this.voyelle == null ^ voyelleAVerifier.voyelle == null ) ) ){
+            semiVoyelleEgale = verifierEgaliteeLettre( this.semiVoyelle, voyelleAVerifier.semiVoyelle );
+            voyelleEgale = verifierEgaliteeLettre( this.voyelle, voyelleAVerifier.voyelle );
+            voyelleCompleteEgale = semiVoyelleEgale && voyelleEgale;
+        }else{
+            voyelleCompleteEgale = false;
+        }
+
+        return voyelleCompleteEgale;
+    }
+
+    private boolean verifierEgaliteeLettre(API_Voyelle semiVoyelle1, API_Voyelle semiVoyelle2) {
+
+        boolean lettreEgale;
+
+        if (semiVoyelle1 == null && semiVoyelle2 == null){
+            lettreEgale = true;
+        }else{
+            lettreEgale = semiVoyelle1.equals(semiVoyelle2);
+        }
+
+        return lettreEgale;
+    }
+
+
+
+
+
+
+
+
+
     /**
      * code utf-16 pour le tilde utilisé pour indiquer les voyelles nasales selon l'API.
      */

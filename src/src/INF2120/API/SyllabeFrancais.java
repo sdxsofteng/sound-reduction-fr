@@ -1,5 +1,6 @@
 package INF2120.API;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -17,6 +18,151 @@ import java.util.Scanner;
  * @see <a href="https://fr.wiktionary.org/wiki/Annexe:Prononciation/fran%C3%A7ais">référence</a>
  */
 public class SyllabeFrancais {
+
+
+    public boolean nonTrouvee (ArrayList<SyllabeFrancais> syllabesUniques){
+
+        boolean nonTrouvee = true;
+
+        if (!syllabesUniques.isEmpty()){
+            for (SyllabeFrancais syllabeUnique : syllabesUniques){
+                if (this.egaliteSyllabes(syllabeUnique)){
+                    nonTrouvee = false;
+                }
+            }
+        }
+
+        return nonTrouvee;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public boolean egaliteSyllabes ( SyllabeFrancais syllabeAVerifier ) {
+
+        boolean attaqueEgales;
+        boolean noyauEgaux;
+        boolean codaEgaux;
+        boolean syllabesEgales;
+
+        if ( verifierComposantes(syllabeAVerifier) ){
+            attaqueEgales = retournerEgaliteeConsonne( this.attaque, syllabeAVerifier.attaque );
+            noyauEgaux = retournerEgaliteeVoyelle( this.noyau, syllabeAVerifier.noyau );
+            codaEgaux = retournerEgaliteeConsonne( this.coda, syllabeAVerifier.coda );
+            syllabesEgales = attaqueEgales && noyauEgaux && codaEgaux;
+        }
+        else {
+            syllabesEgales = false;
+        }
+
+        return syllabesEgales;
+    }
+
+    private boolean retournerEgaliteeConsonne( ConsonneFrancais consonneOriginale,
+                                               ConsonneFrancais consonneAVerifier ) {
+
+        boolean consonneEgales;
+
+        if ( consonneOriginale == null && consonneAVerifier == null){
+            consonneEgales = true;
+        }
+        else if ( consonneOriginale == null || consonneAVerifier == null){
+            consonneEgales = false;
+        }
+        else {
+            consonneEgales = consonneOriginale.egaliteConsonne( consonneAVerifier );
+        }
+
+        return consonneEgales;
+    }
+
+    private boolean retournerEgaliteeVoyelle( VoyelleFrancais voyelleOriginale, VoyelleFrancais voyelleAVerifier ) {
+
+        boolean voyellesEgales;
+
+        if ( voyelleOriginale == null && voyelleAVerifier == null){
+            voyellesEgales = true;
+        }
+        else if ( voyelleOriginale == null || voyelleAVerifier == null){
+            voyellesEgales = false;
+        }
+        else {
+            voyellesEgales = voyelleOriginale.egaliteVoyelle( voyelleAVerifier );
+        }
+
+        return voyellesEgales;
+    }
+
+    private boolean verifierComposantes( SyllabeFrancais syllabeAVerifier ) {
+
+        return !( ( this.attaque == null ^ syllabeAVerifier.attaque == null )
+                && ( this.noyau == null ^ syllabeAVerifier.noyau == null )
+                && ( this.coda == null ^ syllabeAVerifier.coda == null ));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Le groupe de consonne pour l'attaque de la syllabe.  S'il n'est pas présent, alors la valeur est à {@code null}.
      */

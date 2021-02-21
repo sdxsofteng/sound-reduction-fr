@@ -16,6 +16,87 @@ import java.util.stream.Collectors;
  * @see SyllabeFrancais
  */
 public class TexteSonore extends ArrayList< SyllabeFrancais > {
+
+
+    private ArrayList<SyllabeFrancais> syllabesUniques = new ArrayList<SyllabeFrancais>();
+
+    public void trouverOccurenceSyllabes(){
+        for ( SyllabeFrancais syllabeTexte : this ){
+            if (syllabeTexte.nonTrouvee(syllabesUniques)){
+
+            }
+        }
+    }
+
+    //private int compterOccurenceSyllabeTxt(SyllabeFrancais syllabe){
+
+    //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Le caractère utilisé pour séparé les syllabes lors de la lecture et de l'écriture.
      */
