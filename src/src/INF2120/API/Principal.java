@@ -65,7 +65,6 @@ public class Principal {
         scanner.close();
 
         TexteSonore texteSonore = new TexteSonore( nomFichier );
-
         // placer vos actions ici :
 
 
