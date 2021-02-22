@@ -18,19 +18,71 @@ import java.util.stream.Collectors;
 public class TexteSonore extends ArrayList< SyllabeFrancais > {
 
 
-    private ArrayList<SyllabeFrancais> syllabesUniques = new ArrayList<SyllabeFrancais>();
 
-    public void trouverOccurenceSyllabes(){
-        for ( SyllabeFrancais syllabeTexte : this ){
-            if (syllabeTexte.nonTrouvee(syllabesUniques)){
+    public ArrayList<DistanceSyllabes> combinaisonsSyllabes = new ArrayList<DistanceSyllabes>();
 
+    public void calculerDistanceChaqueSyllabes(){
+        for (int i = 0; i < syllabesUniques.size() - 1; i++){
+            for (int j = i + 1; j < syllabesUniques.size(); j++){
+                combinaisonsSyllabes.add(new DistanceSyllabes(syllabesUniques.get(i), syllabesUniques.get(j)));
             }
         }
     }
 
-    //private int compterOccurenceSyllabeTxt(SyllabeFrancais syllabe){
 
-    //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ArrayList<SyllabeFrancais> syllabesUniques = new ArrayList<SyllabeFrancais>();
+
+    public void trouverOccurenceSyllabesTxt(){
+        int occurences;
+
+        for ( SyllabeFrancais syllabeTexte : this ){
+            if (syllabeTexte.nonTrouvee(syllabesUniques)){
+                occurences = compterOccurenceSyllabeTxt(syllabeTexte);
+                syllabesUniques.add(new SyllabeFrancais(syllabeTexte.attaque, syllabeTexte.noyau,
+                        syllabeTexte.coda, occurences));
+            }
+        }
+    }
+
+    private int compterOccurenceSyllabeTxt(SyllabeFrancais syllabe){
+        int occurences = 0;
+
+        for ( SyllabeFrancais syllabeText : this ){
+            if (syllabeText.egaliteSyllabes(syllabe)){
+                occurences++;
+            }
+        }
+
+        return occurences;
+    }
 
 
 

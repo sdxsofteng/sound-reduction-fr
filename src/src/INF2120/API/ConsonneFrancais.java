@@ -15,6 +15,89 @@ import java.util.Scanner;
  */
 public class ConsonneFrancais {
 
+
+
+
+
+    public int calculerDistanceConsonne(ConsonneFrancais consonneComparee){
+
+        return calculerDistanceLettres(this.consonne1, consonneComparee.consonne1)
+                + calculerDistanceLettres(this.consonne2, consonneComparee.consonne2);
+    }
+
+
+
+    public int calculerDistanceLettres(API_Consonne lettre1, API_Consonne lettre2){
+        int distance;
+
+        if (lettre1 == null && lettre2 == null){
+            distance = 0;
+        }else if (lettre1 == null ^ lettre2 == null){
+            distance = 6;
+        }else{
+            distance = calculerDistanceBooleens(lettre1.estVocalique(), lettre2.estVocalique())
+                    + calculerDistanceBooleens(lettre1.estNasal(), lettre2.estNasal())
+                    + calculerDistanceBooleens(lettre1.estVoise(), lettre2.estVoise())
+                    + calculerDistanceBooleens(lettre1.estContinu(), lettre2.estContinu())
+                    + calculerDistanceBooleens(lettre1.estCompact(), lettre2.estCompact())
+                    + calculerDistanceBooleens(lettre1.estAigu(), lettre2.estAigu());
+        }
+        return distance;
+    }
+
+
+    private int calculerDistanceBooleens(boolean valeur1, boolean valeur2){
+        int distance;
+
+        if (valeur1 == valeur2){
+            distance = 0;
+        }else {
+            distance = 1;
+        }
+
+        return distance;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public boolean egaliteConsonne( ConsonneFrancais consonneAVerifier ) {
 
         boolean consonne1Egal;

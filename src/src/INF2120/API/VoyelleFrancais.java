@@ -17,6 +17,80 @@ import java.util.regex.Pattern;
  */
 public class VoyelleFrancais {
 
+    public int calculerDistanceVoyelle(VoyelleFrancais voyelleComparee){
+
+        return calculerDistanceLettres(this.semiVoyelle, voyelleComparee.semiVoyelle)
+                + calculerDistanceLettres(this.voyelle, voyelleComparee.voyelle)
+                + calculerDistanceBooleens(this.estNasal(), voyelleComparee.estNasal());
+    }
+
+
+
+    public int calculerDistanceLettres(API_Voyelle lettre1, API_Voyelle lettre2){
+
+        int distance;
+
+        if (lettre1 == null && lettre2 == null){
+            distance = 0;
+        }else if (lettre1 == null ^ lettre2 == null){
+            distance = 4;
+        }else{
+            distance = calculerDistanceBooleens(lettre1.estArriere(), lettre2.estArriere())
+                    + calculerDistanceBooleens(lettre1.estHaut(), lettre2.estHaut())
+                    + calculerDistanceBooleens(lettre1.estArrondi(), lettre2.estArrondi())
+                    + calculerDistanceBooleens(lettre1.estOuverte(), lettre2.estOuverte());
+        }
+        return distance;
+    }
+
+
+    private int calculerDistanceBooleens(boolean valeur1, boolean valeur2){
+        int distance;
+
+        if (valeur1 == valeur2){
+            distance = 0;
+        }else {
+            distance = 1;
+        }
+
+        return distance;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public boolean egaliteVoyelle( VoyelleFrancais voyelleAVerifier ) {
 
         boolean semiVoyelleEgale;
