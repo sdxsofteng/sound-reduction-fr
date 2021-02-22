@@ -66,7 +66,10 @@ public class Principal {
 
         TexteSonore texteSonore = new TexteSonore( nomFichier );
         // placer vos actions ici :
-
+        texteSonore.trouverOccurenceSyllabesTxt();
+        texteSonore.calculerDistanceChaqueSyllabes();
+        System.out.println(texteSonore.syllabesUniques);
+        System.out.println(texteSonore.combinaisonsSyllabes);
 
         // cette partie du code affiche les résultats, modifier au besoin.
         System.out.println( texteSonore );

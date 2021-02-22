@@ -19,6 +19,81 @@ import java.util.Scanner;
  */
 public class SyllabeFrancais {
 
+    public int calculerDistanceSyllabe(SyllabeFrancais syllabe2){
+
+        return calculerConsonne(this.attaque, syllabe2.attaque) + (calculerVoyelle(this.noyau, syllabe2.noyau) * 2)
+                + calculerConsonne(this.coda, syllabe2.coda);
+    }
+
+    private int calculerConsonne(ConsonneFrancais consonneOriginale, ConsonneFrancais consonneComparee){
+        int distance;
+
+        if (consonneOriginale == null && consonneComparee == null){
+            distance = 0;
+        }else if (consonneOriginale == null ^ consonneComparee == null){
+            if (consonneOriginale == null){
+                distance = consonneComparee.calculerDistanceLettres(consonneComparee.consonne1, null)
+                + consonneComparee.calculerDistanceLettres(consonneComparee.consonne2, null);
+            }else {
+                distance = consonneOriginale.calculerDistanceLettres(consonneOriginale.consonne1, null)
+                + consonneOriginale.calculerDistanceLettres(consonneOriginale.consonne2, null);
+            }
+        }else {
+            distance = consonneOriginale.calculerDistanceConsonne(consonneComparee);
+        }
+        return distance;
+    }
+
+    private int calculerVoyelle(VoyelleFrancais voyelleOriginale, VoyelleFrancais voyelleComparee){
+
+        int distance;
+
+        if (voyelleOriginale == null && voyelleComparee == null){
+            distance = 0;
+        }else if (voyelleOriginale == null ^ voyelleComparee == null){
+            if (voyelleOriginale == null){
+                distance = voyelleComparee.calculerDistanceLettres(voyelleComparee.semiVoyelle, null)
+                        + voyelleComparee.calculerDistanceLettres(voyelleComparee.voyelle, null);
+            }else {
+                distance = voyelleOriginale.calculerDistanceLettres(voyelleOriginale.semiVoyelle, null)
+                        + voyelleOriginale.calculerDistanceLettres(voyelleOriginale.voyelle, null);
+            }
+        }else {
+            distance = voyelleOriginale.calculerDistanceVoyelle(voyelleComparee);
+        }
+        return distance;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public boolean nonTrouvee (ArrayList<SyllabeFrancais> syllabesUniques){
 
@@ -35,6 +110,14 @@ public class SyllabeFrancais {
         return nonTrouvee;
     }
 
+    public int occurences;
+
+    SyllabeFrancais(ConsonneFrancais attaque, VoyelleFrancais noyau, ConsonneFrancais coda, int occurences){
+        this.attaque = attaque;
+        this.noyau = noyau;
+        this.coda = coda;
+        this.occurences = occurences;
+    }
 
 
 
