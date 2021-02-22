@@ -2,6 +2,7 @@ package INF2120.API;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -16,6 +17,110 @@ import java.util.stream.Collectors;
  * @see SyllabeFrancais
  */
 public class TexteSonore extends ArrayList< SyllabeFrancais > {
+
+
+    public void modifierTexteKFois(int k){
+
+        int nombreDeSyllabes = syllabesUniques.size();
+        DistanceSyllabes syllabesAChanger;
+        SyllabeFrancais syllabeARemplacer;
+        SyllabeFrancais syllabeDeRemplacement;
+
+        do{
+
+            syllabesAChanger = trouverPetiteDistance(combinaisonsSyllabes);
+            syllabeARemplacer = trouverSyllabeMoinsOccurente(syllabesAChanger);
+            syllabeDeRemplacement = trouverSyllabeRemplacement(syllabeARemplacer, syllabesAChanger);
+            remplacerSyllabe(syllabeARemplacer, syllabeDeRemplacement);
+
+            nombreDeSyllabes--;
+        }while (nombreDeSyllabes > k);
+    }
+
+    private SyllabeFrancais trouverSyllabeRemplacement(SyllabeFrancais syllabeARemplacer,
+                                                       DistanceSyllabes distanceSyllabes){
+        SyllabeFrancais syllabeDeRemplacement;
+
+        if (distanceSyllabes.syllabe1.egaliteSyllabes(syllabeARemplacer)){
+            syllabeDeRemplacement = distanceSyllabes.syllabe2;
+        }else {
+            syllabeDeRemplacement = distanceSyllabes.syllabe1;
+        }
+
+        return syllabeDeRemplacement;
+    }
+
+    private void remplacerSyllabe(SyllabeFrancais syllabeARemplacer, SyllabeFrancais syllabeDeRemplacement){
+        for (int i = 0; i < this.size(); i++){
+            if (this.get(i).egaliteSyllabes(syllabeARemplacer)){
+                this.set(i, syllabeDeRemplacement);
+            }
+        }
+    }
+
+    private SyllabeFrancais trouverSyllabeMoinsOccurente(DistanceSyllabes syllabesAVerifier){
+        SyllabeFrancais syllabeMoinsOccurente;
+
+        if (syllabesAVerifier.getSyllabe1().occurences < syllabesAVerifier.getSyllabe2().occurences){
+            syllabeMoinsOccurente = syllabesAVerifier.getSyllabe1();
+            syllabesAVerifier.getSyllabe2().occurences = syllabesAVerifier.getSyllabe2().occurences
+                    + syllabeMoinsOccurente.occurences;
+        }else {
+            syllabeMoinsOccurente = syllabesAVerifier.getSyllabe2();
+            syllabesAVerifier.getSyllabe1().occurences = syllabesAVerifier.getSyllabe1().occurences
+                    + syllabeMoinsOccurente.occurences;
+        }
+
+        return  syllabeMoinsOccurente;
+    }
+
+
+    private DistanceSyllabes trouverPetiteDistance(ArrayList<DistanceSyllabes> distancesSyllabes){
+
+        DistanceSyllabes distancePlusPetite = null;
+        int plusPetiteDistance = 0;
+
+        for (DistanceSyllabes distanceSyllabe : distancesSyllabes){
+            if (distanceSyllabe.equals(distancesSyllabes.get(0))){
+                plusPetiteDistance = distanceSyllabe.getDistanceSyllabes();
+                distancePlusPetite = distanceSyllabe;
+            }else {
+                if (plusPetiteDistance >= distanceSyllabe.getDistanceSyllabes()){
+                    plusPetiteDistance = distanceSyllabe.getDistanceSyllabes();
+                    distancePlusPetite = distanceSyllabe;
+                }
+            }
+        }
+        distancesSyllabes.remove(distancePlusPetite);
+
+        return distancePlusPetite;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

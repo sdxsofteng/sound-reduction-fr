@@ -68,8 +68,7 @@ public class Principal {
         // placer vos actions ici :
         texteSonore.trouverOccurenceSyllabesTxt();
         texteSonore.calculerDistanceChaqueSyllabes();
-        System.out.println(texteSonore.syllabesUniques);
-        System.out.println(texteSonore.combinaisonsSyllabes);
+        texteSonore.modifierTexteKFois(nombreDeSyllabes);
 
         // cette partie du code affiche les résultats, modifier au besoin.
         System.out.println( texteSonore );

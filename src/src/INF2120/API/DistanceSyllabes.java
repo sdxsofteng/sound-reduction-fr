@@ -12,6 +12,17 @@ public class DistanceSyllabes {
         this.distanceSyllabes = syllabe1.calculerDistanceSyllabe(syllabe2);
     }
 
+    public SyllabeFrancais getSyllabe1() {
+        return syllabe1;
+    }
+
+    public SyllabeFrancais getSyllabe2() {
+        return syllabe2;
+    }
+
+    public int getDistanceSyllabes() {
+        return distanceSyllabes;
+    }
 
     @Override
     public String toString() {
