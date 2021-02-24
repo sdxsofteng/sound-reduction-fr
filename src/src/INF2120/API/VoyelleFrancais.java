@@ -17,37 +17,51 @@ import java.util.regex.Pattern;
  */
 public class VoyelleFrancais {
 
-    public int calculerDistanceVoyelle(VoyelleFrancais voyelleComparee){
+    /**
+     * calcule la distance entre les deux phonemes de voyelles ensemble
+     * @param voyelleComparee voyelle comparee a this
+     * @return distance totale de la voyelle [0-9]
+     */
+    public int distancePhonemesVoyelles(VoyelleFrancais voyelleComparee){
 
-        return calculerDistanceLettres(this.semiVoyelle, voyelleComparee.semiVoyelle)
-                + calculerDistanceLettres(this.voyelle, voyelleComparee.voyelle)
+        return distancePhonemeUnique(this.semiVoyelle, voyelleComparee.semiVoyelle)
+                + distancePhonemeUnique(this.voyelle, voyelleComparee.voyelle)
                 + calculerDistanceBooleens(this.estNasal(), voyelleComparee.estNasal());
     }
 
-
-
-    public int calculerDistanceLettres(API_Voyelle lettre1, API_Voyelle lettre2){
+    /**
+     * Calcule la distance entre deux phonemes de voyelles
+     * @param phonemeOriginal phoneme du this
+     * @param phonemeComparer phoneme de la voyelle comparee
+     * @return distance [0-4]
+     */
+    private int distancePhonemeUnique(API_Voyelle phonemeOriginal, API_Voyelle phonemeComparer){
 
         int distance;
 
-        if (lettre1 == null && lettre2 == null){
-            distance = 0;
-        }else if (lettre1 == null ^ lettre2 == null){
-            distance = 4;
+        if (phonemeOriginal == null && phonemeComparer == null){
+            distance = Constantes.DISTANCE_ZERO;
+        }else if (phonemeOriginal == null ^ phonemeComparer == null){
+            distance = Constantes.DISTANCE_MAXIMALE_PHONEME_VOYELLE;
         }else{
-            distance = calculerDistanceBooleens(lettre1.estArriere(), lettre2.estArriere())
-                    + calculerDistanceBooleens(lettre1.estHaut(), lettre2.estHaut())
-                    + calculerDistanceBooleens(lettre1.estArrondi(), lettre2.estArrondi())
-                    + calculerDistanceBooleens(lettre1.estOuverte(), lettre2.estOuverte());
+            distance = calculerDistanceBooleens(phonemeOriginal.estArriere(), phonemeComparer.estArriere())
+                    + calculerDistanceBooleens(phonemeOriginal.estHaut(), phonemeComparer.estHaut())
+                    + calculerDistanceBooleens(phonemeOriginal.estArrondi(), phonemeComparer.estArrondi())
+                    + calculerDistanceBooleens(phonemeOriginal.estOuverte(), phonemeComparer.estOuverte());
         }
         return distance;
     }
 
-
-    private int calculerDistanceBooleens(boolean valeur1, boolean valeur2){
+    /**
+     * Calcule la distance entre deux booleens
+     * @param booleenOriginal booleen du this
+     * @param booleenComparer booleen comparer
+     * @return distance [0-1]
+     */
+    private int calculerDistanceBooleens(boolean booleenOriginal, boolean booleenComparer){
         int distance;
 
-        if (valeur1 == valeur2){
+        if (booleenOriginal == booleenComparer){
             distance = 0;
         }else {
             distance = 1;
@@ -57,51 +71,24 @@ public class VoyelleFrancais {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public boolean egaliteVoyelle( VoyelleFrancais voyelleAVerifier ) {
+    /**
+     * Methode permettant de verifier l'egalitee entre deux voyelles. Permet d'eviter les null pointer dans la methode
+     * egaliteLettre
+     * @param voyelleAVerifier voyelle a comparer avec this
+     * @return si les deux voyelles sont egales
+     */
+    public boolean egaliteLettresVoyelles(VoyelleFrancais voyelleAVerifier ) {
 
         boolean semiVoyelleEgale;
         boolean voyelleEgale;
         boolean voyelleCompleteEgale;
 
-        if ( !( ( this.semiVoyelle == null ^ voyelleAVerifier.semiVoyelle == null )
-                || ( this.voyelle == null ^ voyelleAVerifier.voyelle == null ) ) ){
+        if (!(( this.semiVoyelle == null ^ voyelleAVerifier.semiVoyelle == null)
+                || ( this.voyelle == null ^ voyelleAVerifier.voyelle == null))){
             semiVoyelleEgale = verifierEgaliteeLettre( this.semiVoyelle, voyelleAVerifier.semiVoyelle );
             voyelleEgale = verifierEgaliteeLettre( this.voyelle, voyelleAVerifier.voyelle );
             voyelleCompleteEgale = semiVoyelleEgale && voyelleEgale;
+
         }else{
             voyelleCompleteEgale = false;
         }
@@ -109,26 +96,24 @@ public class VoyelleFrancais {
         return voyelleCompleteEgale;
     }
 
-    private boolean verifierEgaliteeLettre(API_Voyelle semiVoyelle1, API_Voyelle semiVoyelle2) {
+    /**
+     * Permet de verifier l'egalite entre deux API_Consonne
+     * @param lettreOriginale lettre du this
+     * @param lettreAVerifier lettre de la consonne comparee
+     * @return valeur d'egalite entre les deux API_Consonne
+     */
+    private boolean verifierEgaliteeLettre(API_Voyelle lettreOriginale, API_Voyelle lettreAVerifier) {
 
         boolean lettreEgale;
 
-        if (semiVoyelle1 == null && semiVoyelle2 == null){
+        if (lettreOriginale == null && lettreAVerifier == null){
             lettreEgale = true;
         }else{
-            lettreEgale = semiVoyelle1.equals(semiVoyelle2);
+            lettreEgale = lettreOriginale.equals(lettreAVerifier);
         }
 
         return lettreEgale;
     }
-
-
-
-
-
-
-
-
 
     /**
      * code utf-16 pour le tilde utilisé pour indiquer les voyelles nasales selon l'API.
