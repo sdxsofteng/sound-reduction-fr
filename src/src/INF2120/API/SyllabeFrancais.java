@@ -19,88 +19,68 @@ import java.util.Scanner;
  */
 public class SyllabeFrancais {
 
-    public int calculerDistanceSyllabe(SyllabeFrancais syllabe2){
-
-        return calculerConsonne(this.attaque, syllabe2.attaque) + (calculerVoyelle(this.noyau, syllabe2.noyau) * 2)
-                + calculerConsonne(this.coda, syllabe2.coda);
+    /**
+     * Calcule la distance entre deux syllabes
+     * @param syllabe2 syllabe pour laquelle nous devons trouver la distance avec le this
+     * @return distance totale entre deux syllabes [0,42]
+     */
+    public int distanceSyllabes(SyllabeFrancais syllabe2){
+        return distanceConsonne(this.attaque, syllabe2.attaque) + (distanceVoyelle(this.noyau, syllabe2.noyau) * 2)
+                + distanceConsonne(this.coda, syllabe2.coda);
     }
 
-    private int calculerConsonne(ConsonneFrancais consonneOriginale, ConsonneFrancais consonneComparee){
+    /**
+     * Retourne la distance entre deux consonne
+     * @param consonneOriginale consonne du this
+     * @param consonneComparee consonne de la syllabe pour laquelle nous voulons trouver la distance avec this
+     * @return distance totale entre deux consonnes [0,12]
+     */
+    private int distanceConsonne(ConsonneFrancais consonneOriginale, ConsonneFrancais consonneComparee){
         int distance;
 
         if (consonneOriginale == null && consonneComparee == null){
-            distance = 0;
+            distance = Constantes.DISTANCE_ZERO;
         }else if (consonneOriginale == null ^ consonneComparee == null){
-            if (consonneOriginale == null){
-                distance = consonneComparee.calculerDistanceLettres(consonneComparee.consonne1, null)
-                + consonneComparee.calculerDistanceLettres(consonneComparee.consonne2, null);
-            }else {
-                distance = consonneOriginale.calculerDistanceLettres(consonneOriginale.consonne1, null)
-                + consonneOriginale.calculerDistanceLettres(consonneOriginale.consonne2, null);
-            }
+            distance = Constantes.DISTANCE_MAXIMALE_CONSONNE;
         }else {
-            distance = consonneOriginale.calculerDistanceConsonne(consonneComparee);
+            distance = consonneOriginale.distancePhonemesConsonne(consonneComparee);
         }
         return distance;
     }
 
-    private int calculerVoyelle(VoyelleFrancais voyelleOriginale, VoyelleFrancais voyelleComparee){
+    /**
+     * Calcule la distance entre deux groupes de voyelles
+     * @param voyelleOriginale groupe de voyelles du this
+     * @param voyelleComparee groupe de voyelles a comparee
+     * @return distance [0-9]
+     */
+    private int distanceVoyelle(VoyelleFrancais voyelleOriginale, VoyelleFrancais voyelleComparee){
 
         int distance;
 
         if (voyelleOriginale == null && voyelleComparee == null){
-            distance = 0;
+            distance = Constantes.DISTANCE_ZERO;
         }else if (voyelleOriginale == null ^ voyelleComparee == null){
-            if (voyelleOriginale == null){
-                distance = voyelleComparee.calculerDistanceLettres(voyelleComparee.semiVoyelle, null)
-                        + voyelleComparee.calculerDistanceLettres(voyelleComparee.voyelle, null);
-            }else {
-                distance = voyelleOriginale.calculerDistanceLettres(voyelleOriginale.semiVoyelle, null)
-                        + voyelleOriginale.calculerDistanceLettres(voyelleOriginale.voyelle, null);
-            }
+            distance = Constantes.DISTANCE_MAXIMALE_VOYELLE;
         }else {
-            distance = voyelleOriginale.calculerDistanceVoyelle(voyelleComparee);
+            distance = voyelleOriginale.distancePhonemesVoyelles(voyelleComparee);
         }
         return distance;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Verifier le arrayList de syllabes passer en parametre pour savoir si celui ci contient la syllabe this
+     * @param syllabesUniques ArrayList de syllabes uniques
+     * @return une valeur booleene
+     */
     public boolean nonTrouvee (ArrayList<SyllabeFrancais> syllabesUniques){
 
         boolean nonTrouvee = true;
 
         if (!syllabesUniques.isEmpty()){
+
             for (SyllabeFrancais syllabeUnique : syllabesUniques){
+
                 if (this.egaliteSyllabes(syllabeUnique)){
                     nonTrouvee = false;
                 }
@@ -110,8 +90,18 @@ public class SyllabeFrancais {
         return nonTrouvee;
     }
 
+    /**
+     * Permet de rattacher le nombre d'occurence a this
+     */
     public int occurences;
 
+    /**
+     * Permet de creer une nouvelle syllabe avec un noyau, une attaque, un coda et une occurence
+     * @param attaque contient l'attaque
+     * @param noyau contient le noyau
+     * @param coda contient le coda
+     * @param occurences contient le nombre d'occurence de la syllabe
+     */
     SyllabeFrancais(ConsonneFrancais attaque, VoyelleFrancais noyau, ConsonneFrancais coda, int occurences){
         this.attaque = attaque;
         this.noyau = noyau;
@@ -119,55 +109,23 @@ public class SyllabeFrancais {
         this.occurences = occurences;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public boolean egaliteSyllabes ( SyllabeFrancais syllabeAVerifier ) {
+    /**
+     * Verifie l'egalite entre deux syllabes. Compare this a la syllabeAVerifier
+     * @param syllabeAVerifier syllabe a verifier
+     * @return si les deux syllabes sont egales
+     */
+    public boolean egaliteSyllabes (SyllabeFrancais syllabeAVerifier) {
 
         boolean attaqueEgales;
         boolean noyauEgaux;
         boolean codaEgaux;
         boolean syllabesEgales;
 
-        if ( verifierComposantes(syllabeAVerifier) ){
-            attaqueEgales = retournerEgaliteeConsonne( this.attaque, syllabeAVerifier.attaque );
-            noyauEgaux = retournerEgaliteeVoyelle( this.noyau, syllabeAVerifier.noyau );
-            codaEgaux = retournerEgaliteeConsonne( this.coda, syllabeAVerifier.coda );
+        if (verifierComposantes(syllabeAVerifier)){
+            attaqueEgales = egaliteeConsonne( this.attaque, syllabeAVerifier.attaque );
+            noyauEgaux = egaliteeVoyelle( this.noyau, syllabeAVerifier.noyau );
+            codaEgaux = egaliteeConsonne( this.coda, syllabeAVerifier.coda );
+
             syllabesEgales = attaqueEgales && noyauEgaux && codaEgaux;
         }
         else {
@@ -177,47 +135,66 @@ public class SyllabeFrancais {
         return syllabesEgales;
     }
 
-    private boolean retournerEgaliteeConsonne( ConsonneFrancais consonneOriginale,
-                                               ConsonneFrancais consonneAVerifier ) {
-
+    /**
+     * Verifie l'egalite entre deux consonnes. Si les deux sont nulls c'est necessairement vrai.
+     * Si une consonne est null et l'autre non-null retourne faux. Sinon procede a la verification de chaque lettre
+     * dans la consonne
+     * @param consonneOriginale consonne du this
+     * @param consonneAVerifier consonne de la syllabe a verifier
+     * @return valeur de verite si les consonnes sont egales
+     */
+    private boolean egaliteeConsonne(ConsonneFrancais consonneOriginale,
+                                     ConsonneFrancais consonneAVerifier ) {
         boolean consonneEgales;
 
-        if ( consonneOriginale == null && consonneAVerifier == null){
+        if (consonneOriginale == null && consonneAVerifier == null){
             consonneEgales = true;
         }
-        else if ( consonneOriginale == null || consonneAVerifier == null){
+        else if (consonneOriginale == null ^ consonneAVerifier == null){
             consonneEgales = false;
         }
         else {
-            consonneEgales = consonneOriginale.egaliteConsonne( consonneAVerifier );
+            consonneEgales = consonneOriginale.egaliteLettresConsonnes(consonneAVerifier);
         }
 
         return consonneEgales;
     }
 
-    private boolean retournerEgaliteeVoyelle( VoyelleFrancais voyelleOriginale, VoyelleFrancais voyelleAVerifier ) {
+    /**
+     * Verifie l'egalite entre deux voyelles. Si les deux sont nulls c'est necessairement vrai.
+     * Si une voyelle est null et l'autre non-null retourne faux. Sinon procede a la verification de chaque lettre
+     * dans la voyelle
+     * @param voyelleOriginale consonne du this
+     * @param voyelleAVerifier consonne de la syllabe a verifier
+     * @return valeur de verite si les consonnes sont egales
+     */
+    private boolean egaliteeVoyelle(VoyelleFrancais voyelleOriginale, VoyelleFrancais voyelleAVerifier ) {
 
         boolean voyellesEgales;
 
-        if ( voyelleOriginale == null && voyelleAVerifier == null){
+        if (voyelleOriginale == null && voyelleAVerifier == null){
             voyellesEgales = true;
         }
-        else if ( voyelleOriginale == null || voyelleAVerifier == null){
+        else if (voyelleOriginale == null ^ voyelleAVerifier == null){
             voyellesEgales = false;
         }
         else {
-            voyellesEgales = voyelleOriginale.egaliteVoyelle( voyelleAVerifier );
+            voyellesEgales = voyelleOriginale.egaliteLettresVoyelles(voyelleAVerifier);
         }
 
         return voyellesEgales;
     }
 
+    /**
+     * Verifie si les attaques(noyau et coda) sont soit null et null ou non-null et non-null. Si ce n'est pas le cas
+     * on sait tous de suite que les syllabes ne sont pas egales
+     * @param syllabeAVerifier syllabe a verifier contre this
+     * @return valeur de verite si les composantes sont null et null ou non-null et non-null
+     */
     private boolean verifierComposantes( SyllabeFrancais syllabeAVerifier ) {
-
         return !( ( this.attaque == null ^ syllabeAVerifier.attaque == null )
                 && ( this.noyau == null ^ syllabeAVerifier.noyau == null )
                 && ( this.coda == null ^ syllabeAVerifier.coda == null ));
-
     }
 
 

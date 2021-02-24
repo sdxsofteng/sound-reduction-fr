@@ -5,11 +5,8 @@ import java.util.Scanner;
 /**
  * Écrivez vos nom ici :
  *
- * @nom
- * @code_permanent
- *
- * @nom
- * @code_permanent
+ * @nom Simon Desormeaux
+ * @code_permanent DESS21079605
  */
 
 public class Principal {
@@ -66,8 +63,8 @@ public class Principal {
 
         TexteSonore texteSonore = new TexteSonore( nomFichier );
         // placer vos actions ici :
-        texteSonore.trouverOccurenceSyllabesTxt();
-        texteSonore.calculerDistanceChaqueSyllabes();
+        texteSonore.trouverSyllabesUniques();
+        texteSonore.distanceSonore();
         texteSonore.modifierTexteKFois(nombreDeSyllabes);
 
         // cette partie du code affiche les résultats, modifier au besoin.
