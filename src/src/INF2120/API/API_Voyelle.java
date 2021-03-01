@@ -20,7 +20,7 @@ public enum API_Voyelle {
     API_304( 0x0061, Ouverture.OUVERTES,     PointArticulationVoyelle.ANTERIEURES,        Rondeur.NON_ARRONDI ),
     API_305( 0x0251, Ouverture.OUVERTES,     PointArticulationVoyelle.POSTERIEURES,       Rondeur.NON_ARRONDI ),
     API_306( 0x0254, Ouverture.MI_OUVERTES,  PointArticulationVoyelle.POSTERIEURES,       Rondeur.ARRONDI ),
-    API_307( 0x0264, Ouverture.MI_FERMEES,   PointArticulationVoyelle.POSTERIEURES,       Rondeur.ARRONDI ),
+    API_307( 0x006F, Ouverture.MI_FERMEES,   PointArticulationVoyelle.POSTERIEURES,       Rondeur.ARRONDI ),
     API_308( 0x0075, Ouverture.FERMEES,      PointArticulationVoyelle.POSTERIEURES,       Rondeur.ARRONDI ),
     API_309( 0x0079, Ouverture.FERMEES,      PointArticulationVoyelle.ANTERIEURES,        Rondeur.ARRONDI ),
     API_310( 0x00F8, Ouverture.MI_FERMEES,   PointArticulationVoyelle.ANTERIEURES,        Rondeur.ARRONDI ),
