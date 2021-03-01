@@ -23,15 +23,14 @@ public class TexteSonore extends ArrayList< SyllabeFrancais > {
      * 2)Remplacer la syllabe la moins occurent par la syllabe la plus occurente
      * @param k nombre de fois que l'on doit reduire le texte
      */
-    public void modifierTexteKFois(int k){
-
+    public void modifierTexteKFois(int k) {
         int nombreDeSyllabes = syllabesUniques.size();
 
         DistanceSonore syllabesAChanger;
         SyllabeFrancais syllabeARemplacer;
         SyllabeFrancais syllabeDeRemplacement;
 
-        while (nombreDeSyllabes > k){
+        while (nombreDeSyllabes > k) {
 
             syllabesAChanger = plusPetiteDistanceSonore(distancesSonores);
             syllabeARemplacer = syllabeMoinsOccurente(syllabesAChanger);
@@ -49,14 +48,15 @@ public class TexteSonore extends ArrayList< SyllabeFrancais > {
      * @param syllabeRemplacee syllabe remplacee
      */
     private void supprimerDistancesReliees(SyllabeFrancais syllabeRemplacee){
+
         for (int i = 0; i < distancesSonores.size(); i++){
             if (distancesSonores.get(i).syllabe1.egaliteSyllabes(syllabeRemplacee)
-                    || distancesSonores.get(i).syllabe2.egaliteSyllabes(syllabeRemplacee)){
+                    || distancesSonores.get(i).syllabe2.egaliteSyllabes(syllabeRemplacee)) {
+
                 distancesSonores.remove(i);
                 i--;
             }
         }
-
     }
 
     /**

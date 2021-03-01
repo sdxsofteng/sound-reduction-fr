@@ -47,7 +47,6 @@ public class Principal {
         return resultat;
     }
 
-
     /**
      * Programme principal de l'application
      *
@@ -61,7 +60,7 @@ public class Principal {
 
         scanner.close();
 
-        TexteSonore texteSonore = new TexteSonore( nomFichier );
+        TexteSonore texteSonore = new TexteSonore(nomFichier);
         // placer vos actions ici :
         texteSonore.trouverSyllabesUniques();
         texteSonore.distanceSonore();
